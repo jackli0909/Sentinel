@@ -18,4 +18,17 @@
         <module>sentinel-transport-netty-http</module>
         <module>sentinel-transport-spring-mvc</module>
     </modules>
+
+
+    <!--trendsi仓库-->
+    <distributionManagement>
+        <repository>
+            <id>nexus-releases</id>
+            <url>https://maven.trendsi.co/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>nexus-snapshots</id>
+            <url>https://maven.trendsi.co/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>
