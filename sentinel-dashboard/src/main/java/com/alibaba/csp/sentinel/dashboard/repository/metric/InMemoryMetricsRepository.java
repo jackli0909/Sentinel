@@ -18,6 +18,7 @@ package com.alibaba.csp.sentinel.dashboard.repository.metric;
 import com.alibaba.csp.sentinel.dashboard.datasource.entity.MetricEntity;
 import com.alibaba.csp.sentinel.util.StringUtil;
 import com.alibaba.csp.sentinel.util.TimeUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -41,6 +42,9 @@ public class InMemoryMetricsRepository implements MetricsRepository<MetricEntity
 
     private static final long MAX_METRIC_LIVE_TIME_MS = 1000 * 60 * 5;
 
+    @Autowired
+    private MysqlMetricsRepository mysqlMetricsRepository;
+
     /**
      * {@code app -> resource -> timestamp -> metric}
      */
@@ -54,6 +58,7 @@ public class InMemoryMetricsRepository implements MetricsRepository<MetricEntity
         if (entity == null || StringUtil.isBlank(entity.getApp())) {
             return;
         }
+        mysqlMetricsRepository.addMetricEntity(entity);
         readWriteLock.writeLock().lock();
         try {
             allMetrics.computeIfAbsent(entity.getApp(), e -> new HashMap<>(16))

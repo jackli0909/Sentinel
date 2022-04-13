@@ -15,6 +15,7 @@
  */
 package com.alibaba.csp.sentinel.dashboard;
 
+import com.alibaba.csp.sentinel.dashboard.listener.ApplicationStartedEventListener;
 import com.alibaba.csp.sentinel.init.InitExecutor;
 
 import org.springframework.boot.SpringApplication;
@@ -30,7 +31,11 @@ public class DashboardApplication {
 
     public static void main(String[] args) {
         triggerSentinelInit();
-        SpringApplication.run(DashboardApplication.class, args);
+        // SpringApplication.run(DashboardApplication.class, args);
+        SpringApplication application = new SpringApplication(DashboardApplication.class);
+        application.addListeners(new ApplicationStartedEventListener());
+        application.run(args);
+
     }
 
     private static void triggerSentinelInit() {
